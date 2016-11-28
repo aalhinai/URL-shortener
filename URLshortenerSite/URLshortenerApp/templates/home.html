@@ -1,0 +1,19 @@
+<!-- home.html -->
+
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Welcome to SUPERCOACH URL Shortner{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+
+
+<section class="cta">
+    <h1> Welcome {{ user.username }} !!! </h1>
+    <div class="cta-content">
+        <div align = "left">
+            <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+            </div>
+    </div>
+</section>
+
+{% endblock %}

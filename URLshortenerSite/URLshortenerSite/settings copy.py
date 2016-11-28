@@ -15,9 +15,7 @@ import django.contrib.auth
 django.contrib.auth.LOGIN_URL = '/'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-STATICFILES_DIRS = (os.path.join(PROJECT_ROOT,'static'),)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -60,7 +58,7 @@ ROOT_URLCONF = 'URLshortenerSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_ROOT, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,7 +80,7 @@ WSGI_APPLICATION = 'URLshortenerSite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'USER':'',
         'PASSWORD':'',
         'HOST':'',
@@ -128,11 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
-#STATICFILES_DIRS = (
-#    ('css', os.path.join(STATIC_ROOT , 'css')),
-#    ('js', os.path.join(STATIC_ROOT , 'js')),
-#    ('images', os.path.join(STATIC_ROOT , 'images')),
-#)
-#STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    ('css', os.path.join(STATIC_ROOT , 'css')),
+    ('js', os.path.join(STATIC_ROOT , 'js')),
+    ('images', os.path.join(STATIC_ROOT , 'images')),
+)

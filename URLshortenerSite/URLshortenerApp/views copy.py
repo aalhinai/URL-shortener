@@ -12,11 +12,7 @@ from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_exempt
 
-
-#def  index(request):
-#     return render_to_response('index.html')
-
-
+ 
 @csrf_protect
 #@csrf_exempt
 def register(request):
@@ -59,7 +55,7 @@ def home(request):
     { 'user': request.user }
     )
 
-#def login(request):
-#    #c = {}
-#    #c.update(csrf(request))
-#    return render_to_response('registration/login.html')
+def login(request):
+    #c = {}
+    #c.update(csrf(request))
+    return render_to_response('registration/login.html')
