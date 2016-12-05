@@ -22,12 +22,20 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', auth_views.login),
-    url(r'^home/$', home),
+    url(r'^home/$', home, name='home'),
     url(r'^register/$', register),
     url(r'^register/success/$', register_success),
     #url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'registration/login.html'}),
     #url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'}),
     url(r'^logout/$', logout_page),
+    # when short URL is requested it redirects to original URL
+    #url(r'^(?P<short_id>\w{15})$', redirect_original , name='redirectoriginal'),
+    url(r'^(?P<short_id>\w+)/$', redirect_original , name='redirectoriginal'),
+    #url(r'^include(?P<short_id>\w+)/$', redirect_original , name='redirectoriginal'),
+    # this will create a URL's short id and return the short URL
+    url(r'^makeshort/$', shorten_url , name='shortenurl'),
+               
+               
 
 ]

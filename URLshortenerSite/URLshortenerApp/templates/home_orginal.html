@@ -1,0 +1,82 @@
+<!-- home.html -->
+{% extends "base.html" %}
+
+<script type="text/javascript">
+    $(function() {
+      $('#submitButton').click(function() {
+                               $.ajax({
+                                      type: "POST",
+                                      url: "/makeshort/",
+                                      data: {
+                                      'url' : $('#url').val(),
+                                      'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+                                      },
+                                      success: returnSuccess,
+                                      dataType: 'json'
+                                      });
+                               });
+      });
+      
+      function returnSuccess(data, textStatus, jqXHR) {
+          if(data.url) {
+              $('#url-result').text(data.url);
+              $('#url').val("");
+          } else {
+              $('#url-result').text("Do not submit blank."); 
+          }
+          
+      }
+</script>
+<body>
+    <div id="wrap">
+        <header>
+            <h1><a href="{% url 'shortenersite:home' %}">URL Shortner</a><small>Shorten the URL</small></h1>
+        </header>
+        
+        <div id="content">
+            {% block content %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-sm-9">
+                        <input type="text" name="url" id="url" class="form-control input-sm" placeholder="http://www.facebook.com" />
+                    </div>
+                    <div class="col-sm-3">
+                        {% csrf_token %}
+                        <button id="submitButton" class="btn btn-primary">Submit</button></p>
+                    </div>
+                </div>
+                <div class="panel-footer"><span id="url-result">Enter the URL above and click submit!</span></div>
+            </div>
+            
+            <div align = "left">
+                <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+            </div>
+            
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+<!--{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Welcome to SUPERCOACH URL Shortner{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+
+
+<section class="cta">
+    <h1> Welcome {{ user.username }} !!! </h1>
+    <div class="cta-content">
+        <div align = "left">
+            <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+            </div>
+    </div>
+</section>
+
+{% endblock %}-->
+
+
