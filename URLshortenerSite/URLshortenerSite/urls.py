@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^register/success/$', register_success),
     #url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
     url(r'^accounts/login/$', auth_views.login, {'template_name': 'registration/login.html'}),
+    url(r'^URLShortner/$', shorten_url, name='shortenurl'),
+    url(r'^delete/$', deleteRec, name='delete'),
     #url(r'^accounts/login/$', auth_views.login, {'template_name': 'login.html'}),
     url(r'^logout/$', logout_page),
     # when short URL is requested it redirects to original URL
@@ -34,7 +36,6 @@ urlpatterns = [
     url(r'^(?P<short_id>\w+)/$', redirect_original , name='redirectoriginal'),
     #url(r'^include(?P<short_id>\w+)/$', redirect_original , name='redirectoriginal'),
     # this will create a URL's short id and return the short URL
-    url(r'^makeshort/$', shorten_url , name='shortenurl'),
                
                
 

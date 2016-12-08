@@ -9,27 +9,90 @@
 
 
 <section class="cta">
-    <h2> Welcome {{ user.username }} ! </h2>
+    <h2> Welcome {{ user.username.upper }} ! </h2>
     <div class="cta-content">
-        <div class="container">
-        <div align = "center">
-                    {% render_table data %}
-                   <form method="post" action=".">
-                    
-                   
-                    
-                    
-
-
-
-                    <button type="submit" value="URLShortner" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;">URL Shortner</button>
-                    <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+        <div class="container" >
             
-                </div>
-            </form>
+               <form class="form" id="list_data" method="post" action="">{% csrf_token %}
+                    {% render_table data %}
+                    
+                    
+                    
+                        <div class="box" id="newURLbox" style="display: none" >
+                            
+                            <input type="text" name="newUrl" id="newUrl"  placeholder="Insert the URL that you need to short it" style="width: 350px; display: inline-block; margin: 0 8px">
+                            <input type="text" name="newUrlDesc" id="newUrlDesc"  placeholder="Insert the URL description" style="width: 350px; display: inline-block"><br>
+                            
+                        </div>
+                    
+                    <div align = "center">
+                    <button type="submit" id="URLShortner" value="URLShortner" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent; display: none" onclick="proceed_shortner()">URL Shortner</button>
+                    <button type="button" id="URLShortnerShow"value="URLShortnerShow" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="show()">Shortner New URL</button>
+                    <button type="submit" value="DeleteRec" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="proceed_del()">Delete Records</button>
+                    <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+                    </div>
+                 
+                 {% block javascript %}
+                 
+                 <script type = "text/javascript">
+                     function proceed_del() {
+                         form = document.getElementById('list_data');
+                         var checklist = document.getElementsByName('selection');
+                         var checklist_count = 0;
+                         
+                         for (var i = 0; i < checklist.length; i++)
+                         {
+                             if(checklist[i].checked)
+                             {
+                                 checklist_count += 1;
+                             }
+                         }
+                         
+                         if (checklist_count != 0){
+                             var user_choice = window.confirm('Are you sure you want to delete the selected '+ checklist_count + ' record(s)?');
+                                 if (user_choice == true){
+                                    form.setAttribute('action', "/delete/");
+                                    form.submit();
+                                 }else {
+                                  return false;
+                                }
+                          }else {
+                                                              
+                           return alert("You have to select which record to be delete");
+                        }
+                         
+                        
+                    }
+                                                              
+                                                              
+                 
+                 function proceed_shortner() {
+                     form = document.getElementById('list_data');
+                     var userURL_input = document.getElementById('newUrl').value;
+                     var userURLde_input = document.getElementById('newUrlDesc').value;
+                     if( userURL_input != "" && userURLde_input != "")
+                     { form.setAttribute('action', "/URLShortner/");
+                       form.submit();
+                     }else{
+                         alert("Please insert both the URL & Description ");
+                         document.getElementById("URLShortner").type = "button"
+                         return document.getElementById("URLShortnerShow").click();
 
-
-
+                     }
+                 }
+                 
+                 function show(){
+                  
+                   document.getElementById("newURLbox").style.display = "block";
+                   document.getElementById("URLShortnerShow").style.display = "none";
+                   document.getElementById("URLShortner").style.display = "block";
+                   
+                 
+                 
+                 }
+                 
+                 </script>
+                 {% endblock %}
         </div>
 </section>
 

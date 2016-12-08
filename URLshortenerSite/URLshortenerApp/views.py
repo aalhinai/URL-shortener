@@ -61,6 +61,7 @@ def home(request):
     #data = Usr_Urls.objects.filter(user= request.user).order_by('-pub_date')
     data = UsrTable(Usr_Urls.objects.filter(user= request.user).order_by('-pub_date'))
     RequestConfig(request).configure(data)
+    data.paginate(page=request.GET.get('page', 1), per_page=16)
     #data = Usr_Urls.objects.all()
     #return render_to_response('home.html',{ 'user': request.user , 'data': data }
     return render(request, 'home.html', { 'user': request.user , 'data': data }
@@ -82,16 +83,19 @@ def redirect_original(request, short_id):
 
 # shorten_url : We will make a request to this view to create and return us the short URL.
 def shorten_url(request):
-    url = request.POST.get("url", '')
+    url = request.POST.get("newUrl", '')
+    urlDesc = request.POST.get("newUrlDesc",'')
     if not (url == ''):
         short_id = get_short_code()
-        b = Usr_Urls(httpurl=url, short_id=short_id, user= request.user)
+        b = Usr_Urls(httpurl=url, short_id=short_id, description=urlDesc, user= request.user)
         b.save()
         
-        response_data = {}
-        response_data['url'] = settings.SITE_URL + "/" + short_id
-        return HttpResponse(json.dumps(response_data),  content_type="application/json")
-    return HttpResponse(json.dumps({"error": "error occurs"}), content_type="application/json")
+#        response_data = {}
+#        response_data['url'] = settings.SITE_URL + "/" + short_id
+#        return HttpResponse(json.dumps(response_data),  content_type="application/json")
+        return HttpResponseRedirect('/home/')
+#return render_to_response(json.dumps({"error": "error occurs"}), content_type="application/json")
+    return HttpResponseRedirect('/home/')
 
 
 #get_short_code : This will generate the unique short code/id for URLs.
@@ -106,5 +110,17 @@ def get_short_code():
         except:
             return short_id
 
+
+# To delete selected data records
+def deleteRec(request):
+    
+        list = request.POST.getlist("selection")
+        if not (list == ''):
+
+          for pk in list:
+             get_object_or_404(Usr_Urls, pk=pk).delete()
+
+
+        return HttpResponseRedirect('/home/')
 
 

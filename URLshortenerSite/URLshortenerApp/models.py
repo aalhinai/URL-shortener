@@ -14,13 +14,17 @@ from django.contrib.auth.models import User
 # count (It will store the number of times the URL is visited)
 
 class Usr_Urls(models.Model):
-      short_id = models.SlugField(max_length=8,primary_key=True)
-      httpurl = models.URLField(max_length=200)
-      pub_date = models.DateTimeField(auto_now=True)
-      count = models.IntegerField(default=0)
+      short_id = models.SlugField(max_length=8,primary_key=True, verbose_name='Short URL')
+      description = models.CharField(max_length=300, verbose_name='Description', default='No Description')
+      httpurl = models.URLField(max_length=200, verbose_name='Orginal URL')
+      pub_date = models.DateTimeField(auto_now=True, verbose_name='Created Data\Time')
+      count = models.IntegerField(default=0, verbose_name='Visits')
       #user = models.OneToOneField(User, on_delete=models.CASCADE, default='User')
       #user = models.ForeignKey(User, on_delete=models.CASCADE, default= 'User')
       user = models.ForeignKey('auth.User', on_delete=models.CASCADE, default='User')
+
+      class Meta:
+        verbose_name_plural = "Total URLs"
 
 def __str__(self):
     return self.httpurl
