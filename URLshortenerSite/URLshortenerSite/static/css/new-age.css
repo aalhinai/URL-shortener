@@ -316,6 +316,8 @@ section.cta .cta-content h2 {
   max-width: 450px;
   font-size: 50px;
 }
+
+
 @media (min-width: 768px) {
   section.cta .cta-content h2 {
     font-size: 80px;

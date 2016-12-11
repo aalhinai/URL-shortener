@@ -4,6 +4,7 @@ from django.shortcuts import render
 # Create your views here.
 #views.py
 from URLshortenerApp.forms import *
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
@@ -15,7 +16,7 @@ from URLshortenerApp.models import Usr_Urls
 from .Tables import UsrTable
 from django_tables2 import RequestConfig
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib import messages
 
 #def  index(request):
 #     return render_to_response('index.html')
@@ -62,10 +63,10 @@ def home(request):
     data = UsrTable(Usr_Urls.objects.filter(user= request.user).order_by('-pub_date'))
     RequestConfig(request).configure(data)
     data.paginate(page=request.GET.get('page', 1), per_page=16)
+    return render(request, 'home.html', { 'user': request.user , 'data': data })
     #data = Usr_Urls.objects.all()
     #return render_to_response('home.html',{ 'user': request.user , 'data': data }
-    return render(request, 'home.html', { 'user': request.user , 'data': data }
-    )
+
 
 #def login(request):
 #    #c = {}
@@ -82,18 +83,21 @@ def redirect_original(request, short_id):
     return HttpResponseRedirect(url.httpurl)
 
 # shorten_url : We will make a request to this view to create and return us the short URL.
+@login_required
 def shorten_url(request):
     url = request.POST.get("newUrl", '')
     urlDesc = request.POST.get("newUrlDesc",'')
     if not (url == ''):
         short_id = get_short_code()
-        b = Usr_Urls(httpurl=url, short_id=short_id, description=urlDesc, user= request.user)
+        b = Usr_Urls(httpurl=url, short_id = short_id, short_url = settings.SITE_URL + short_id, description=urlDesc, user= request.user)
         b.save()
-        
+        messages.success(request, 'your URL has been successfully shorted')
+        #messages.add_message(request, messages.INFO, 'Hello world.')
 #        response_data = {}
 #        response_data['url'] = settings.SITE_URL + "/" + short_id
 #        return HttpResponse(json.dumps(response_data),  content_type="application/json")
         return HttpResponseRedirect('/home/')
+
 #return render_to_response(json.dumps({"error": "error occurs"}), content_type="application/json")
     return HttpResponseRedirect('/home/')
 
@@ -112,6 +116,7 @@ def get_short_code():
 
 
 # To delete selected data records
+@login_required
 def deleteRec(request):
     
         list = request.POST.getlist("selection")
@@ -120,7 +125,7 @@ def deleteRec(request):
           for pk in list:
              get_object_or_404(Usr_Urls, pk=pk).delete()
 
-
+        messages.success(request, 'ُThe selection has been successfully deleted ')
         return HttpResponseRedirect('/home/')
 
 
