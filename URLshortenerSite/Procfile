@@ -1,1 +1,1 @@
-web: gunicorn  su-coach.wsgi --log-file -
+web: gunicorn  URLshortenerApp.wsgi --log-file -
