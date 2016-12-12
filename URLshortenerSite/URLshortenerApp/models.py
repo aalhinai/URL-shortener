@@ -25,6 +25,7 @@ class Usr_Urls(models.Model):
       
 
       class Meta:
+        verbose_name = "Total URLs"
         verbose_name_plural = "Total URLs"
 
 def __str__(self):

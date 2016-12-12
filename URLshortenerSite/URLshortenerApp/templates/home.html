@@ -22,32 +22,32 @@
               {% endfor %}
              {% endblock %}
             
-               <form class="form" id="list_data" method="post" action="">{% csrf_token %}
+        <form class="form" id="list_data" method="post" action="">{% csrf_token %}
                   
-                 <div align = "center"> {% render_table data %}</div>
+            <div align = "center"> {% render_table data %}</div>
                    
                     
-                        <div class="box" id="newURLbox" style="display: none" >
+                <div class="box" id="newURLbox" style="display: none" >
                             
-                            <input type="text" name="newUrl" id="newUrl"  placeholder="Insert the URL that you need to short it" style="width: 350px; display: inline-block; margin: 0 8px">
-                            <input type="text" name="newUrlDesc" id="newUrlDesc"  placeholder="Insert the URL description" style="width: 350px; display: inline-block"><br>
+                    <input type="text" name="newUrl" id="newUrl"  placeholder="Insert the URL that you need to short it" style="width: 350px; display: inline-block; margin: 0 8px">
+                    <input type="text" name="newUrlDesc" id="newUrlDesc"  placeholder="Insert the URL description" style="width: 350px; display: inline-block"><br>
                             
-                        </div>
+                </div>
                     
-                    <div align = "center">
-                    <button type="submit" id="URLShortner" value="URLShortner" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent; display: none" onclick="proceed_shortner()">Generate URL Shortner</button>
-                    <button type="button" id="URLShortnerShow" value="URLShortnerShow" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="show()">Shortner New URL</button>
-                    <button type="submit" id="DeleteRec" value="DeleteRec" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="proceed_del()">Delete Records</button>
-                    <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
-                    </div>
+                <div align = "center">
+                  <button type="submit" id="URLShortner" value="URLShortner" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent; display: none" onclick="proceed_shortner()">Generate URL Shortner</button>
+                  <button type="button" id="URLShortnerShow" value="URLShortnerShow" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="show()">Shortner New URL</button>
+                  <button type="submit" id="DeleteRec" value="DeleteRec" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="proceed_del()">Delete Records</button>
+                  <a><button type="button" class="btn btn-outline btn-xl page-scroll" style="background-color: transparent;" onclick="window.location.href='/logout/' ">Logout</button></a>
+                </div>
                     
-                
+         </form>       
                    
                  
-                 {% block javascript %}
+            {% block javascript %}
                  
-                 <script type = "text/javascript">
-                     function proceed_del() {
+            <script type = "text/javascript">
+                function proceed_del() {
                          form = document.getElementById('list_data');
                          var checklist = document.getElementsByName('selection');
                          var checklist_count = 0;
@@ -111,10 +111,7 @@
                  }
                  
                  
-                 function copying(source) {
-                     copybox = document.getElementsByName('copying');
-                     
-                 }
+                 
 
                function custumMessage(msg){
                  if (window.webkitNotifications) {
