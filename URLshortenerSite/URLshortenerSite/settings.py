@@ -92,16 +92,28 @@ WSGI_APPLICATION = 'URLshortenerSite.wsgi.application'
 
 
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
+#        'USER':'',
+#        'PASSWORD':'',
+#        'HOST':'',
+#        'POST':'',
+#    }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_ROOT, 'db.sqlite3'),
-        'USER':'',
-        'PASSWORD':'',
-        'HOST':'',
-        'POST':'',
+        'NAME': 'dau0i6n55vvs31',
+        'USER':'grwrggblujoera',
+        'PASSWORD':'1080cb5528ba7527d5e61ac6fbc12ca6d8ef0dcbe08668ee7564a19c280477ca',
+        'HOST':'ec2-79-125-125-97.eu-west-1.compute.amazonaws.com',
+        'PORT':'5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
